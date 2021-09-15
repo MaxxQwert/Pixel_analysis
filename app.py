@@ -54,7 +54,3 @@ def upload_file():
             error = 'Недопустимый тип файла'
         logger.info(f'file: {file.filename}, count_wb: {count_wb}, color: {color}, count_color: {count_color}, error: {error}')
     return render_template("index.html", error=error, count_wb=count_wb, color=color, count_color=count_color)
-
-
-if __name__ == '__main__':
-    app.run()
