@@ -1,7 +1,15 @@
 from PIL import Image, ImageColor, UnidentifiedImageError
 from flask import Flask, request, render_template
+import logging
+from pythonjsonlogger import jsonlogger
 
 app = Flask(__name__)
+logger = logging.getLogger()
+logHandler = logging.FileHandler('info.log')
+formatter = jsonlogger.JsonFormatter('%(asctime)%(message)')
+logHandler.setFormatter(formatter)
+logger.addHandler(logHandler)
+logger.setLevel(logging.INFO)
 
 
 def color_check(file, color):
@@ -44,7 +52,7 @@ def upload_file():
             color = ''
         except UnidentifiedImageError:
             error = 'Недопустимый тип файла'
-
+        logger.info(f'file: {file.filename}, count_wb: {count_wb}, color: {color}, count_color: {count_color}, error: {error}')
     return render_template("index.html", error=error, count_wb=count_wb, color=color, count_color=count_color)
 
 
